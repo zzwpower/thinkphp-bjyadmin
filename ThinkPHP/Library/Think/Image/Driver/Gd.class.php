@@ -42,7 +42,7 @@ class Gd
      * @param  string $imgname 图像路径
      */
     public function open($imgname)
-    {   
+    {
         //检测图像文件
         //当本地文件时才判断如下if语句，否则如果是http外网图片时不判断
         if (substr($imgname, 0, 4) != 'http' && !is_file($imgname)) {

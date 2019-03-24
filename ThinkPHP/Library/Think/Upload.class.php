@@ -226,24 +226,6 @@ class Upload
         if (isset($finfo)) {
             finfo_close($finfo);
         }
-        //*************************添加部分开始*************************
-        // 判断是否上传成功
-        if (!empty($info)) {
-            // 获取需要上传到oss的目录
-            $need_upload_oos=C('NEED_UPLOAD_OSS');
-            foreach ($info as $k => $v) {
-                // 判断此路径是否需要上传到oss
-                foreach ($need_upload_oos as $m => $n) {
-                    if (strpos($v['savepath'], $n)!==false) {
-                        // 上传到oss
-                        oss_upload($v['savepath'].$v['savename']);
-                        continue;
-                    }
-                }                
-            }
-
-        }
-        //*************************添加部分结束*************************
         return empty($info) ? false : $info;
     }
 

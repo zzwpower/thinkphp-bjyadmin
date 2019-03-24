@@ -41,7 +41,7 @@ class Memcached extends Cache
         $this->options['length'] = isset($options['length']) ? $options['length'] : 0;
 
         $this->handler = new MemcachedResource;
-        $options['servers'] && $this->handler->addServer($options['servers'],11211);
+        $options['servers'] && $this->handler->addServers($options['servers']);
         $options['lib_options'] && $this->handler->setOptions($options['lib_options']);
     }
 
@@ -72,7 +72,8 @@ class Memcached extends Cache
             $expire = $this->options['expire'];
         }
         $name = $this->options['prefix'] . $name;
-        if ($this->handler->set($name, $value, time() + $expire)) {
+        $expire = $expire == 0 ? 0 : time() + $expire;
+        if ($this->handler->set($name, $value, $expire)) {
             if ($this->options['length'] > 0) {
                 // 记录缓存队列
                 $this->queue($name);
